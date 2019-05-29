@@ -1,0 +1,36 @@
+{
+  "rawlog": {
+    "description": "Parse JSON log",
+    "processors": [
+      {
+        "json": {
+          "field": "message",
+          "target_field": "log-json"
+        }
+      },
+      {
+        "remove": {
+          "field": "message"
+        }
+      },
+      {
+        "append": {
+          "field": "tags",
+          "value": [
+            "isjsonlog"
+          ]
+        }
+      }
+    ],
+    "on_failure": [
+      {
+        "append": {
+          "field": "tags",
+          "value": [
+            "nonjsonlog"
+          ]
+        }
+      }
+    ]
+  }
+}
